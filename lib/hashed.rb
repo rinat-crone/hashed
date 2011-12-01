@@ -2,13 +2,15 @@ require "hashed/version"
 require "active_record"
 
 module Hashed
-  def hashed(opts = { field: :id, only_field: false })
-    opts          = { field: opts } if opts.is_a? Symbol
-    opts[:field]  = :id             if opts[:field].nil?
-    result        = {}
+  def hashed(opts = {})
+    result  = {}
+    opts    = { by: opts } if opts.is_a? Symbol
+    options = { by: primary_key.to_sym, only: false }
+    options.merge! opts
 
-    self.all.each do |row|
-      result[row.send(opts[:field])] = (opts[:only_field] ? row.send(opts[:only_field]) : row)
+    dataset = options[:only] ? select([options[:by], options[:only]]) : self
+    dataset.all.each do |row|
+      result[row.send(options[:by])] = (options[:only] ? row.send(options[:only]) : row)
     end
 
     result

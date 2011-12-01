@@ -1,19 +1,21 @@
 # Hashed
 
-Provides `hashed` method to ActiveRecord objects-set that return hash where keys is value of some field in dataset (default: "id").
+Provides `hashed` method to ActiveRecord objects-set that return hash where keys is value of some attribute of object (default – primary key of used table).
+
+Put this line to your Gemfile
 
 ```ruby
 gem "hashed"
 ```
 
-Then run `bundle install` and simple use it!
+Then run `bundle install` and let's go!
 
 ```ruby
 Category.active.hashed
 # equal to
-Category.active.hashed(:id)
-# you may want to have hash not by id
+Category.active.hashed(Category.primary_key)
+# you may want to have hash not by primary_key
 Category.active.hashed(:created_at)
 # you may want to select only one field ({key: value})
-Category.active.hashed(field: :created_at, only_field: :name)
+Category.active.hashed(by: :created_at, only: :name)
 ```
