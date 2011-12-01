@@ -2,10 +2,14 @@ require "hashed/version"
 require "active_record"
 
 module Hashed
-  def hashed(field = :id)
+  def hashed(opts = { field: :id, only_field: false })
+    opts = { field: opts } if opts.is_a? Symbol
     result = {}
 
-    self.all.each { |row| result[row.send(field)] = row }
+    self.all.each do |row|
+      result[row.send(opts[:field])] = (opts[:only_field] ? row.send(opts[:only_field]) : row)
+    end
+
     result
   end
 end

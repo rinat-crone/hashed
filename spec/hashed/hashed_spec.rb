@@ -10,4 +10,8 @@ describe Hashed do
                                          Post.find(2).created_at => Post.find(2) })
   end
 
+  it "return id-keyed hash with one value" do
+    Post.hashed(field: :id, only_field: :created_at).should eq({ 1 => Post.find(1).created_at, 2 => Post.find(2).created_at })
+  end
+
 end
