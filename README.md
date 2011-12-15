@@ -1,5 +1,7 @@
 # Hashed
 
+[![Build Status](https://secure.travis-ci.org/rinat-crone/hashed.png)](http://travis-ci.org/rinat-crone/hashed)
+
 Provides `hashed` method to ActiveRecord objects-set that return hash where keys is value of some attribute of object (default – primary key of used table).
 
 Put this line to your Gemfile
