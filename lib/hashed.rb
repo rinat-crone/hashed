@@ -8,7 +8,7 @@ module Hashed
     options = { by: (primary_key.respond_to?(:to_sym) ? primary_key.to_sym : primary_key.to_s), only: false }
     options.merge! opts
 
-    dataset = options[:only] ? select([options[:by], options[:only]]) : self
+    dataset = options[:only] ? select([[table_name, options[:by]].join('.'), [table_name, options[:only]].join('.')]) : self
     dataset.all.each do |row|
       result[row.send(options[:by])] = (options[:only] ? row.send(options[:only]) : row)
     end
